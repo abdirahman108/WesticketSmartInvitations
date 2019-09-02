@@ -30,7 +30,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ResultsActivity" />
         <activity android:name=".ScanActivity" />
-        <activity android:name=".TicketsListActivity"></activity>
+        <activity android:name=".Processing" />
+        <activity android:name=".TicketsListActivity" />
+        <activity android:name=".DataProcessingActivity"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,15 @@
 package com.westechhub.westicketsmartinvitations;
 
 import android.Manifest;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,16 +22,32 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.channels.FileChannel;
 import java.util.List;
+
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_1;
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_2;
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_3;
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_4;
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_5;
+import static com.westechhub.westicketsmartinvitations.DatabaseHelper.TABLE_NAME;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
     private TextView contactUs;
     SQLiteDatabase db;
+
+//    Context context = this;
+
 
     @Override
     protected void onStart() {
@@ -39,17 +60,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+
         loginButton = findViewById(R.id.main_getting_started);
         contactUs = findViewById(R.id.main_contact_us_btn);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    loadFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                importDB();
             }
         });
 
@@ -62,35 +82,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadFile() throws IOException {
+    public void importDB() {
 
-        FileReader file = null;
+        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File sd = new File(dir);
+        File data = Environment.getDataDirectory();
+        FileChannel source = null;
+        FileChannel destination = null;
+        String backupDBPath = "/data/com.westechhub.westicketsmartinvitations/databases/A.db";
+        String currentDBPath = "A.db";
+        File currentDB = new File(sd, currentDBPath);
+        File backupDB = new File(data, backupDBPath);
         try {
-            file = new FileReader("guest_list.csv");
-        } catch (FileNotFoundException e) {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            Toast.makeText(this, "Please wait", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        BufferedReader buffer = new BufferedReader(file);
-        String line = "";
-        String tableName ="guest_list";
-        String columns = "Ticket_No, Event, Status, Date, TIme";
-        String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-        String str2 = ");";
+    }
 
-        db.beginTransaction();
-        while ((line = buffer.readLine()) != null) {
-            StringBuilder sb = new StringBuilder(str1);
-            String[] str = line.split(",");
-            sb.append("'" + str[0] + "',");
-            sb.append(str[1] + "',");
-            sb.append(str[2] + "',");
-            sb.append(str[3] + "'");
-            sb.append(str[4] + "'");
-            sb.append(str2);
-            db.execSQL(sb.toString());
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
+    private void loadFile() throws IOException {
+
+
 
     }
 
@@ -99,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
             // only for Marshmallow and newer versions
             Dexter.withActivity(this)
                     .withPermissions(
-                            Manifest.permission.CAMERA
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
 //                            Manifest.permission.CALL_PHONE,
 //                            Manifest.permission.READ_SMS,
 //                            Manifest.permission.READ_CONTACTS

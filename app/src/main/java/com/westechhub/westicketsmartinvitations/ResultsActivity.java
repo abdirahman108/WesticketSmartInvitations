@@ -51,10 +51,9 @@ public class ResultsActivity extends AppCompatActivity {
 
         if (ResultData.contains(":")){
             String[] split = ResultData.split("\\:");
-            String invitations = split[0];
-            String Events = split[1];
-            String eventName = split[2];
-            String ticketNo = split[3];
+
+            String eventName = split[0];
+            String ticketNo = split[1];
 
             txtStatus.setText(Status);
             txtTicketNo.setText("Ticket Number: " + ticketNo);
@@ -64,7 +63,7 @@ public class ResultsActivity extends AppCompatActivity {
                 //Status Allowed
                 allowedStatus();
 
-                updateDatabase(invitations, Events, eventName, ticketNo);
+//                updateDatabase(invitations, Events, eventName, ticketNo);
 
 
             }else if (Status.contains("Denied")){
@@ -87,11 +86,6 @@ public class ResultsActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    private void updateDatabase(String invitations, String events, String eventName, String ticketNo) {
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

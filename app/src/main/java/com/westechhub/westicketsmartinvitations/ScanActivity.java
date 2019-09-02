@@ -113,7 +113,11 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
         //Get Scan Results
         ScData = result.getContents();
 
-
+        Intent intent = new Intent(ScanActivity.this, Processing.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("Data", ScData);
+        startActivity(intent);
+        finish();
 
 
 
