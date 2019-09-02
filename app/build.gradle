@@ -22,7 +22,34 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Hashing
+    api 'com.google.guava:guava:27.0.1-android'
+
+    // ZBar API
+    implementation 'me.dm7.barcodescanner:zbar:1.8.4'
+
+    //Pilgrim Paper Library
+    implementation 'io.paperdb:paperdb:2.6'
+
+    //Material Design Library
+    implementation 'com.github.rey5137:material:1.2.5'
+
+    //AppCompat, CardView, RecyclerView library is required by Material library.
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //Slider
+    implementation "com.android.support:support-v4:+"
+    implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
+    //Permission API
+    implementation 'com.karumi:dexter:5.0.0'
 }

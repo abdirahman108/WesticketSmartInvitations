@@ -1,18 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@android:color/white">
 
-    <TextView
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/westech"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" />
+
+    <!--<ImageView-->
+    <!--android:id="@+id/adv"-->
+    <!--android:layout_width="185dp"-->
+    <!--android:layout_height="185dp"-->
+    <!--android:background="@drawable/image1"-->
+    <!--android:layout_margin="1dp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_below="@id/logo"/>-->
+
+    <LinearLayout
+        android:id="@+id/welcometxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_marginTop="1dp">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Welcome"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please get started and login to scan the invitaions"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/main_getting_started"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/getting_started"
+        android:layout_above="@+id/signin"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Getting Started"
+        android:textSize="25sp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"/>
+
+
+    <LinearLayout
+        android:id="@+id/signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Dont have an Account?  "/>
+
+        <TextView
+            android:id="@+id/main_contact_us_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact us"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
