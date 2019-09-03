@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
+
+import io.paperdb.Paper;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -47,30 +53,43 @@ public class ResultsActivity extends AppCompatActivity {
         statusBox = findViewById(R.id.status_box);
         btnContinue = findViewById(R.id.result_continue);
 
+        Paper.init(this);
 
 
-        if (ResultData.contains(":")){
-            String[] split = ResultData.split("\\:");
+        if (ResultData != null){
 
-            String eventName = split[0];
-            String ticketNo = split[1];
+            //Decode Scan Results
+            byte[] decoded= Base64.decode(ResultData, Base64.DEFAULT);
+            try {
+                String DecData = new String(decoded, "UTF-8");
 
-            txtStatus.setText(Status);
-            txtTicketNo.setText("Ticket Number: " + ticketNo);
-            txtEventName.setText("Event Name: " + eventName);
+                //Split Scan Result
+                if (DecData.contains(":")) {
+                    String[] split = DecData.split("\\:");
+                    String eventName = split[0];
+                    String ticketNo = split[1];
 
-            if (Status.contains("Allowed")){
-                //Status Allowed
-                allowedStatus();
-
-//                updateDatabase(invitations, Events, eventName, ticketNo);
-
-
-            }else if (Status.contains("Denied")){
-                //Status Denied
-                deniedStatus();
+                    txtStatus.setText(Status);
+                    txtTicketNo.setText("Ticket Number: " + ticketNo);
+                    txtEventName.setText("Event Name: " + eventName);
 
 
+                    if (Status.contains("Allowed")){
+                        //Status Allowed
+                        allowedStatus(ticketNo, eventName);
+
+                    }else if (Status.contains("Denied")){
+                        //Status Denied
+                        deniedStatus();
+                    }
+
+
+                }else {
+                    Toast.makeText(this, "Unsupported QR Code", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
         }else {
@@ -94,15 +113,21 @@ public class ResultsActivity extends AppCompatActivity {
         statusBox.setBackgroundColor(Color.parseColor("#ff1f2e"));
         btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
 
-
 }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void allowedStatus() {
+    private void allowedStatus(String ticketNo, String eventName) {
         imgStatus.setBackgroundResource(R.drawable.sax);
         statusBox.setBackgroundColor(Color.parseColor("#34ae00"));
         btnContinue.setBackgroundColor(Color.parseColor("#34ae00"));
 
+        String savedTickedNo = Paper.book().read(ticketNo);
+
+        if (TextUtils.isEmpty(savedTickedNo)){
+            Paper.book().write(ticketNo, ticketNo);
+        }else {
+            deniedStatus();
+        }
     }
 
 }
