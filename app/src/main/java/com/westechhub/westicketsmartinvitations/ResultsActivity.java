@@ -109,6 +109,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void deniedStatus() {
+        txtStatus.setText("Denied");
         imgStatus.setBackgroundResource(R.drawable.khalad);
         statusBox.setBackgroundColor(Color.parseColor("#ff1f2e"));
         btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
@@ -117,6 +118,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void allowedStatus(String ticketNo, String eventName) {
+        txtStatus.setText("Denied");
         imgStatus.setBackgroundResource(R.drawable.sax);
         statusBox.setBackgroundColor(Color.parseColor("#34ae00"));
         btnContinue.setBackgroundColor(Color.parseColor("#34ae00"));
