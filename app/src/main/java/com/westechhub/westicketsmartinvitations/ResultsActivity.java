@@ -125,6 +125,11 @@ public class ResultsActivity extends AppCompatActivity {
 
         String savedTickedNo = Paper.book().read(ticketNo);
 
+        if (TextUtils.isEmpty(savedTickedNo)){
+            Paper.book().write(ticketNo, ticketNo);
+        }else {
+            deniedStatus();
+        }
     }
 
 }
