@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
+import android.text.Html;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -24,13 +24,13 @@ import io.paperdb.Paper;
 public class ResultsActivity extends AppCompatActivity {
 
     ImageView imgStatus;
-    TextView txtStatus, txtTicketInfo, txtEventName, txtTicketNo;
+    TextView txtStatus, txtTicketInfo, txtEventName, txtTicketNo, txtTime;
     Button btnContinue;
-    RelativeLayout statusBox;
+    RelativeLayout outerLayer;
     ActionBar mActionBar;
 
 
-    private String ResultData = "", Status = "";
+    private String ResultData = "",  Status = "";
 
     private ProgressDialog loadingBar;
 
@@ -44,17 +44,18 @@ public class ResultsActivity extends AppCompatActivity {
         ResultData =  getIntent().getStringExtra("Data");
         Status =  getIntent().getStringExtra("Status");
 
-
         imgStatus = findViewById(R.id.img_status);
         txtStatus = findViewById(R.id.txt_status);
         txtTicketInfo = findViewById(R.id.ticket_info);
         txtEventName = findViewById(R.id.event_name);
         txtTicketNo = findViewById(R.id.ticket_number);
-        statusBox = findViewById(R.id.status_box);
+        outerLayer = findViewById(R.id.outerLayer);
         btnContinue = findViewById(R.id.result_continue);
+        txtTime = findViewById(R.id.time);
+
+        txtStatus.setText(Status);
 
         Paper.init(this);
-
 
         if (ResultData != null){
 
@@ -69,18 +70,23 @@ public class ResultsActivity extends AppCompatActivity {
                     String eventName = split[0];
                     String ticketNo = split[1];
 
-                    txtStatus.setText(Status);
-                    txtTicketNo.setText("Ticket Number: " + ticketNo);
-                    txtEventName.setText("Event Name: " + eventName);
+                    String str1 = String.valueOf(Html.fromHtml("<b>Ticket Number: <b>"));
+                    String str2 = String.valueOf(Html.fromHtml("<b>Event Name: <b>" ));
+
+
+                    txtTicketNo.setText(str1 + ticketNo);
+                    txtEventName.setText(str2+ eventName);
 
 
                     if (Status.contains("Allowed")){
                         //Status Allowed
                         allowedStatus(ticketNo, eventName);
 
+
                     }else if (Status.contains("Denied")){
                         //Status Denied
-                        deniedStatus();
+                        deniedStatus(ticketNo);
+
                     }
 
 
@@ -108,22 +114,24 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void deniedStatus() {
-        txtStatus.setText("Denied");
-        imgStatus.setBackgroundResource(R.drawable.khalad);
-        statusBox.setBackgroundColor(Color.parseColor("#ff1f2e"));
+    private void deniedStatus(String ticketNo) {
+        imgStatus.setBackgroundResource(R.drawable.khalad_new);
+        outerLayer.setBackgroundColor(Color.parseColor("#ff1f2e"));
         btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
+
+        String timeID = ticketNo + "Time";
+        String showTime = Paper.book().read(timeID);
+        txtTime.setText("Scanned On: "+ showTime);
 
 }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void allowedStatus(String ticketNo, String eventName) {
-        txtStatus.setText("Denied");
-        imgStatus.setBackgroundResource(R.drawable.sax);
-        statusBox.setBackgroundColor(Color.parseColor("#34ae00"));
+        imgStatus.setBackgroundResource(R.drawable.sax_new);
+        outerLayer.setBackgroundColor(Color.parseColor("#34ae00"));
         btnContinue.setBackgroundColor(Color.parseColor("#34ae00"));
 
-        String savedTickedNo = Paper.book().read(ticketNo);
+        txtTime.setText("");
 
     }
 

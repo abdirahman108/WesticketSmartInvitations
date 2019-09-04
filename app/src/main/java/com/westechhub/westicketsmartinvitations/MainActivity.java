@@ -33,13 +33,6 @@ import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_1;
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_2;
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_3;
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_4;
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.COL_5;
-import static com.westechhub.westicketsmartinvitations.DatabaseHelper.TABLE_NAME;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
@@ -69,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                importDB();
+//                importDB();
             }
         });
 
@@ -84,25 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void importDB() {
 
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File sd = new File(dir);
-        File data = Environment.getDataDirectory();
-        FileChannel source = null;
-        FileChannel destination = null;
-        String backupDBPath = "/data/com.westechhub.westicketsmartinvitations/databases/A.db";
-        String currentDBPath = "A.db";
-        File currentDB = new File(sd, currentDBPath);
-        File backupDB = new File(data, backupDBPath);
-        try {
-            source = new FileInputStream(currentDB).getChannel();
-            destination = new FileOutputStream(backupDB).getChannel();
-            destination.transferFrom(source, 0, source.size());
-            source.close();
-            destination.close();
-            Toast.makeText(this, "Please wait", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private void loadFile() throws IOException {

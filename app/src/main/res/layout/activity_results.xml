@@ -4,32 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/outerLayer"
+    android:background="@color/colorPrimary"
     tools:context=".ResultsActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_settings"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorPrimary"
-        android:layout_below="@id/event_details"
-        >
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_margin="5dp">
 
+        <RelativeLayout
+            android:id="@+id/event_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true">
+            <!--android:layout_below="@id/app_bar_settings">-->
+
+            <TextView
+                android:id="@+id/ticket_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Ticket Info"/>
+
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:layout_below="@+id/ticket_info"
+                android:text="Event Name: "/>
+            <TextView
+                android:id="@+id/ticket_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_below="@+id/event_name"
+                android:textSize="20sp"
+                android:text="Ticket Number: "/>
+
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/toolbar_settings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_details">
 
             <RelativeLayout
                 android:id="@+id/status_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="-20dp">
+                android:layout_alignParentTop="true">
 
                 <ImageView
                     android:id="@+id/img_status"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="5dp" />
 
@@ -41,75 +79,40 @@
                     android:layout_centerHorizontal="true"
                     android:layout_margin="3dp"
                     android:text="Status: "
-                    android:textColor="@android:color/white"
                     android:textSize="25dp" />
 
             </RelativeLayout>
 
         </RelativeLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:id="@+id/event_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--android:layout_below="@id/app_bar_settings">-->
-
-        <TextView
-            android:id="@+id/ticket_info"
+        <RelativeLayout
+            android:id="@+id/qaybtaqoraalka"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:text="Ticket Info"/>
+            android:layout_below="@id/toolbar_settings">
 
-        <TextView
-            android:id="@+id/event_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textSize="20sp"
-            android:layout_below="@+id/ticket_info"
-            android:text="Event Name: "/>
-        <TextView
-            android:id="@+id/ticket_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_below="@+id/event_name"
-            android:textSize="20sp"
-            android:text="Ticket Number: "/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:text="Time: 01:55 PM"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/result_continue"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Continue"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:textSize="25dp"/>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/qaybtaqoraalka"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_below="@id/app_bar_settings">
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textSize="20sp"
-            android:text="Time: "/>
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/result_continue"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="Continue"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:textAllCaps="false"
-        android:textSize="25dp"/>
 
 </RelativeLayout>

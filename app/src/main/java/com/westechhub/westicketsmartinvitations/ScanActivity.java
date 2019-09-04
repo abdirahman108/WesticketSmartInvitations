@@ -116,13 +116,20 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
         if  (ScData.matches(regex)){
 
-            Intent intent = new Intent(ScanActivity.this, ResultsActivity.class);
+            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("Data", ScData);
-            intent.putExtra("Status", "Allowed");
+            intent.putExtra("Supported", "Yes");
             startActivity(intent);
             finish();
 
+        }else{
+            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("Data", ScData);
+            intent.putExtra("Supported", "No");
+            startActivity(intent);
+            finish();
         }
 
 
