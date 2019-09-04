@@ -1,4 +1,4 @@
-package com.westechhub.westicketsmartinvitations;
+package com.westechhub.ticketbox;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.firebase.database.DatabaseReference;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -29,6 +30,8 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ImageView scanInvitations, scannedInivations;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onStart() {
@@ -57,6 +60,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+
         for(String name : file_maps.keySet()){
 
             TextSliderView textSliderView = new TextSliderView(this);
@@ -72,6 +76,9 @@ public class HomeActivity extends AppCompatActivity
                     .putString("extra",name);
 
             sliderShow.addSlider(textSliderView);
+
+//            mDatabase = FirebaseDatabase.getInstance().getReference().child("Invitations").child("Events");
+//            mDatabase.keepSynced(true);
 
         }
 
