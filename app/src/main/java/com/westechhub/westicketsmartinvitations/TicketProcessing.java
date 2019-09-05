@@ -1,8 +1,14 @@
 package com.westechhub.westicketsmartinvitations;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -52,6 +58,7 @@ public class TicketProcessing extends AppCompatActivity {
 
                 }else {
                     alertDialog();
+                    vibrate();
                     Toast.makeText(this, "Unsupported QR Code", Toast.LENGTH_SHORT).show();
                 }
 
@@ -61,6 +68,7 @@ public class TicketProcessing extends AppCompatActivity {
 
         }else {
             alertDialog();
+            vibrate();
             Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
 
@@ -81,8 +89,8 @@ public class TicketProcessing extends AppCompatActivity {
         btn_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
                 finish();
+                dialog.cancel();
             }
         });
     }
@@ -99,7 +107,7 @@ public class TicketProcessing extends AppCompatActivity {
             SimpleDateFormat currentDate = new SimpleDateFormat("dd, MMM, yyyy");
             saveCurrentDate = currentDate.format(calendar.getTime());
 
-            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
             saveCurrentTime = currentTime.format(calendar.getTime());
 
             String timeID = ticketNo + "Time";
@@ -109,9 +117,11 @@ public class TicketProcessing extends AppCompatActivity {
 
             ticketStatus = "Allowed";
             continueToResults(ticketStatus);
+            toneGen();
         }else {
             ticketStatus = "Denied";
             continueToResults(ticketStatus);
+            vibrate();
         }
     }
 
@@ -122,6 +132,25 @@ public class TicketProcessing extends AppCompatActivity {
         intent.putExtra("Status", ticketStatus);
         startActivity(intent);
         finish();
+    }
+
+    public void toneGen(){
+        ToneGenerator toneG = new ToneGenerator(AudioManager.ERROR, 100);
+        toneG.startTone(ToneGenerator.TONE_SUP_ERROR, 200);
+    }
+
+    public void vibrate(){
+
+        int vibrateTime = 200;
+
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(vibrateTime, VibrationEffect.DEFAULT_AMPLITUDE));
+        }else {
+            vibrator.vibrate(vibrateTime);
+        }
+
     }
 
 }
