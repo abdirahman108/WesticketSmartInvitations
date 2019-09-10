@@ -47,13 +47,9 @@ public class HomeActivity extends AppCompatActivity
 
         SliderLayout sliderShow = (SliderLayout) findViewById(R.id.slider);
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Step 1 click the Scan Button",R.drawable.khalad);
-        file_maps.put("Step 2 point the camera ",R.drawable.scanimageone);
-        file_maps.put("Not Allowed Invitation (Duplicate",R.drawable.khalad);
-        file_maps.put("Step 1 click the Scan Button",R.drawable.sax);
         file_maps.put("These pictures will help you",R.drawable.scanimagezero);
         file_maps.put("Welcome to TicketBox",R.drawable.scanimagezeroo);
-        file_maps.put("Allowed Invitation (not usable) ",R.drawable.sax);
+
 
 
 

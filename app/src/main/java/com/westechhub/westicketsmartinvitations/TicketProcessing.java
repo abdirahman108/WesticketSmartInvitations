@@ -18,9 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.hash.Hashing;
+
 import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,7 +31,7 @@ import io.paperdb.Paper;
 
 public class TicketProcessing extends AppCompatActivity {
 
-    private String ResultData = "", ticketStatus = "", Supported = "";
+    private String ResultData = "", ticketStatus = null, Supported = "";
     private String saveCurrentDate, saveCurrentTime;
 
     @Override
@@ -54,7 +57,15 @@ public class TicketProcessing extends AppCompatActivity {
                     String eventName = split[0];
                     String ticketNo = split[1];
 
-                    checkTicketStatus(eventName, ticketNo);
+                    if (ticketNo.contains("-")){
+                        String [] eventSplit = ticketNo.split("\\-");
+                        String eventCode = eventSplit[0];
+                        String eventTicketNo = eventSplit[1];
+
+                        checkTicketStatus(eventName,  eventTicketNo, eventCode);
+
+                    }
+
 
                 }else {
                     alertDialog();
@@ -72,6 +83,40 @@ public class TicketProcessing extends AppCompatActivity {
             Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void checkTicketStatus(String eventName, String eventTicketNo, String eventCode) {
+
+        String savedTickedNo = Paper.book().read(eventTicketNo);
+        String hashedEventCode = Hashing.sha1().hashString(eventCode, Charset.forName("UTF-8")).toString();
+
+        if (TextUtils.isEmpty(savedTickedNo)){
+
+            //save time
+            Calendar calendar = Calendar.getInstance();
+
+            //Date
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd, MMM, yyyy");
+            saveCurrentDate = currentDate.format(calendar.getTime());
+
+            //Time
+            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
+            saveCurrentTime = currentTime.format(calendar.getTime());
+
+
+            String timeID = eventTicketNo + "Time";
+
+            Paper.book().write(eventTicketNo, eventTicketNo);
+            Paper.book().write(timeID, saveCurrentTime);
+
+            ticketStatus = "Allowed";
+            continueToResults(ticketStatus);
+            toneGen();
+        }else {
+            ticketStatus = "Denied";
+            continueToResults(ticketStatus);
+            vibrate();
+        }
     }
 
     private void alertDialog() {
@@ -96,34 +141,7 @@ public class TicketProcessing extends AppCompatActivity {
     }
 
 
-    private void checkTicketStatus(String eventName, String ticketNo) {
-        
-        String savedTickedNo = Paper.book().read(ticketNo);
 
-        if (TextUtils.isEmpty(savedTickedNo)){
-
-            Calendar calendar = Calendar.getInstance();
-
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd, MMM, yyyy");
-            saveCurrentDate = currentDate.format(calendar.getTime());
-
-            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
-            saveCurrentTime = currentTime.format(calendar.getTime());
-
-            String timeID = ticketNo + "Time";
-
-            Paper.book().write(ticketNo, ticketNo);
-            Paper.book().write(timeID, saveCurrentTime);
-
-            ticketStatus = "Allowed";
-            continueToResults(ticketStatus);
-            toneGen();
-        }else {
-            ticketStatus = "Denied";
-            continueToResults(ticketStatus);
-            vibrate();
-        }
-    }
 
     private void continueToResults(String ticketStatus) {
         Intent intent = new Intent(TicketProcessing.this, ResultsActivity.class);

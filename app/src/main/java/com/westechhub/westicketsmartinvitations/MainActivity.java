@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,13 +35,12 @@ import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
+import io.paperdb.Paper;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
     private TextView contactUs;
-    SQLiteDatabase db;
-
-//    Context context = this;
 
 
     @Override
@@ -53,8 +54,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(intent);
+        Paper.init(this);
+
+        String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
+
+        if (!TextUtils.isEmpty(Hubiye)){
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
+
 
         loginButton = findViewById(R.id.main_getting_started);
         contactUs = findViewById(R.id.main_contact_us_btn);
@@ -62,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                importDB();
+                Intent intent = new Intent(MainActivity.this, ActivationScanActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -79,13 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    private void loadFile() throws IOException {
-
-
-
-    }
-
     private void requestPermission(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             // only for Marshmallow and newer versions

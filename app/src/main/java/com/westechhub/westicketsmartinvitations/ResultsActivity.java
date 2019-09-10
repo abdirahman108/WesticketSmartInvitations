@@ -70,12 +70,21 @@ public class ResultsActivity extends AppCompatActivity {
                     String eventName = split[0];
                     String ticketNo = split[1];
 
-                    String str1 = String.valueOf(Html.fromHtml("<b>Ticket Number: <b>"));
-                    String str2 = String.valueOf(Html.fromHtml("<b>Event Name: <b>" ));
+                    if (ticketNo.contains("-")){
+                        String [] eventSplit = ticketNo.split("\\-");
+                        String eventCode = eventSplit[0];
+                        String eventTicketNo = eventSplit[1];
+
+                        String str1 = String.valueOf(Html.fromHtml("<b>Ticket Number: <b>"));
+                        String str2 = String.valueOf(Html.fromHtml("<b>Event Name: <b>" ));
 
 
-                    txtTicketNo.setText(str1 + ticketNo);
-                    txtEventName.setText(str2+ eventName);
+                        txtTicketNo.setText(str1 + eventTicketNo);
+                        txtEventName.setText(str2+ eventName);
+
+                    }
+
+
 
 
                     if (Status.contains("Allowed")){

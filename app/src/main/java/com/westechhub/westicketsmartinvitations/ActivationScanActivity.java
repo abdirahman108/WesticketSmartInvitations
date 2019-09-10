@@ -25,7 +25,7 @@ import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 
-public class ScanActivity extends AppCompatActivity implements ZBarScannerView.ResultHandler {
+public class ActivationScanActivity extends AppCompatActivity implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
     private static final String FLASH_STATE = "FLASH_STATE";
     private boolean mFlash;
@@ -118,24 +118,13 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
         //Get Scan Results
         ScData = result.getContents();
 
+        String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
+
 
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
-        if  (ScData.matches(regex)){
 
-            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("Data", ScData);
-            intent.putExtra("Supported", "Yes");
-            startActivity(intent);
-            finish();
-
-        } else{
-            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("Data", ScData);
-            intent.putExtra("Supported", "No");
-            startActivity(intent);
-            finish();
+        if (ScData.matches(regex)){
+            Toast.makeText(this, "Way Shaqaynaysa", Toast.LENGTH_SHORT).show();
         }
 
 
