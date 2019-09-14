@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
 
-        if (!TextUtils.isEmpty(Hubiye)){
+        if (TextUtils.isEmpty(Hubiye)){
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
         }
