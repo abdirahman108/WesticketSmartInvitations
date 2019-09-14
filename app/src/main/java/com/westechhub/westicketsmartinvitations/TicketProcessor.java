@@ -44,9 +44,6 @@ public class TicketProcessor extends AppCompatActivity {
         Supported =  getIntent().getStringExtra("Supported");
         ActivationData = getIntent().getStringExtra("ActivationData");
 
-
-
-
         if (ResultData != null && Supported.contains("Yes")){
 
             //Decode Scan Results
