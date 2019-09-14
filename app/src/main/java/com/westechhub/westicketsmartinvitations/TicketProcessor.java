@@ -69,7 +69,6 @@ public class TicketProcessor extends AppCompatActivity {
 
                     }
 
-
                 }else {
                     alertDialog();
                     vibrate();
@@ -107,7 +106,6 @@ public class TicketProcessor extends AppCompatActivity {
         } else {
             alertDialog();
             vibrate();
-            Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -118,7 +116,6 @@ public class TicketProcessor extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
     private void checkTicketStatus(String eventName, String eventTicketNo, String eventCode) {
 
@@ -184,9 +181,6 @@ public class TicketProcessor extends AppCompatActivity {
             }
         });
     }
-
-
-
 
     private void continueToResults(String ticketStatus) {
         Intent intent = new Intent(TicketProcessor.this, ResultsActivity.class);
