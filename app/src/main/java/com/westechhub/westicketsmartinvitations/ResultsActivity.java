@@ -30,7 +30,6 @@ public class ResultsActivity extends AppCompatActivity {
     RelativeLayout outerLayer;
     ActionBar mActionBar;
 
-
     private String ResultData = "",  Status = "", eventTicketNo = "";
 
     private ProgressDialog loadingBar;
@@ -137,8 +136,7 @@ public class ResultsActivity extends AppCompatActivity {
         String timeID = eventTicketNo + "Time";
         String showTime = Paper.book().read(timeID);
         txtTime.setText("Scanned On: "+ showTime);
-
-}
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void allowedStatus(String ticketNo, String eventName) {
@@ -147,7 +145,6 @@ public class ResultsActivity extends AppCompatActivity {
         btnContinue.setBackgroundColor(Color.parseColor("#34ae00"));
 
         txtTime.setText("");
-
     }
 
 }

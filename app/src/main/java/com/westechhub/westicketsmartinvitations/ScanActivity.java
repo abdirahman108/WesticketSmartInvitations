@@ -109,7 +109,6 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
         //Get Scan Results
         ScData = result.getContents();
 
-
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
         if  (ScData.matches(regex)){
 
@@ -129,10 +128,7 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
             finish();
         }
 
-
-
     }
-
 
     public void toneGen(){
         ToneGenerator toneG = new ToneGenerator(AudioManager.ERROR, 100);

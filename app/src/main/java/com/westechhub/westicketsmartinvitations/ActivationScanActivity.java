@@ -116,9 +116,6 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
         //Get Scan Results
         ScData = result.getContents();
 
-
-
-
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
 
         if (ScData.matches(regex)){
@@ -133,9 +130,8 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
             vibrate();
         }
 
-
-
     }
+
     private void alertDialog() {
         final Dialog dialog = new Dialog(this); // Context, this, etc.
         dialog.setTitle("Title");
@@ -156,6 +152,7 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
             }
         });
     }
+
     public void toneGen(){
         ToneGenerator toneG = new ToneGenerator(AudioManager.ERROR, 100);
         toneG.startTone(ToneGenerator.TONE_SUP_ERROR, 200);

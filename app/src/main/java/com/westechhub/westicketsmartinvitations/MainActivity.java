@@ -1,16 +1,10 @@
 package com.westechhub.westicketsmartinvitations;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,16 +17,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.channels.FileChannel;
 import java.util.List;
 
 import io.paperdb.Paper;
@@ -41,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
     private TextView contactUs;
-
 
     @Override
     protected void onStart() {
@@ -63,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
         loginButton = findViewById(R.id.main_getting_started);
         contactUs = findViewById(R.id.main_contact_us_btn);
 
@@ -84,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void importDB() {
-
-
-    }
     private void requestPermission(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             // only for Marshmallow and newer versions
@@ -96,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                            Manifest.permission.CALL_PHONE,
-//                            Manifest.permission.READ_SMS,
-//                            Manifest.permission.READ_CONTACTS
                     ).withListener(new MultiplePermissionsListener() {
                 @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
 

@@ -134,7 +134,6 @@ public class TicketProcessor extends AppCompatActivity {
             SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
             saveCurrentTime = currentTime.format(calendar.getTime());
 
-
             String timeID = eventTicketNo + "Time";
 
             Paper.book().write(eventTicketNo, eventTicketNo);
@@ -144,7 +143,6 @@ public class TicketProcessor extends AppCompatActivity {
             continueToResults(ticketStatus);
             toneGen();
             Toast.makeText(this, savedActivationCode, Toast.LENGTH_LONG).show();
-
 
         }else if (!hashedEventCode.equals(savedActivationCode)){
             ticketStatus = "Used";

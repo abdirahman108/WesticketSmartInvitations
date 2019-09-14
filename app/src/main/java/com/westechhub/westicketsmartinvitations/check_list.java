@@ -12,19 +12,13 @@ import java.util.List;
 import io.paperdb.Paper;
 
 public class check_list extends AppCompatActivity {
-    TextView txtTime, ticketNo, chklist;
 
     ListView listView;
-
-    private String  eventTicketNo="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
-
-
-
 
         Paper.init(this );
 

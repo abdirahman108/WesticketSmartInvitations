@@ -36,8 +36,6 @@ public class HomeActivity extends AppCompatActivity
         super.onStart();
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +48,6 @@ public class HomeActivity extends AppCompatActivity
         file_maps.put("These pictures will help you",R.drawable.scanimagezero);
         file_maps.put("Welcome to TicketBox",R.drawable.scanimagezeroo);
 
-
-
-
-
-
         for(String name : file_maps.keySet()){
 
             TextSliderView textSliderView = new TextSliderView(this);
@@ -62,7 +55,6 @@ public class HomeActivity extends AppCompatActivity
             textSliderView
                     .description(name)
                     .image(file_maps.get(name));
-
 
             //add your extra information
             textSliderView.bundle(new Bundle());
@@ -100,9 +92,6 @@ public class HomeActivity extends AppCompatActivity
                 //Check List
                 Intent intent = new Intent(HomeActivity.this, check_list.class);
                 startActivity(intent);
-
-
-
             }
         });
 
@@ -177,10 +166,9 @@ public class HomeActivity extends AppCompatActivity
             // only for Marshmallow and newer versions
             Dexter.withActivity(this)
                     .withPermissions(
-                            Manifest.permission.CAMERA
-//                            Manifest.permission.CALL_PHONE,
-//                            Manifest.permission.READ_SMS,
-//                            Manifest.permission.READ_CONTACTS
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ).withListener(new MultiplePermissionsListener() {
                 @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
 
