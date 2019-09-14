@@ -9,25 +9,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.common.hash.Hashing;
-import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
-
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
 
 import io.paperdb.Paper;
 import me.dm7.barcodescanner.zbar.Result;
@@ -134,7 +123,7 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
 
         if (ScData.matches(regex)){
             // Send Scan Results to Ticket Processing Class
-            Intent intent = new Intent(ActivationScanActivity.this, TicketProcessing.class);
+            Intent intent = new Intent(ActivationScanActivity.this, TicketProcessor.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("ActivationData", ScData);
             startActivity(intent);

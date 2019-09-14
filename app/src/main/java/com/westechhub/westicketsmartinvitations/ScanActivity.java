@@ -5,20 +5,11 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
 
 import io.paperdb.Paper;
 import me.dm7.barcodescanner.zbar.Result;
@@ -122,7 +113,7 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
         if  (ScData.matches(regex)){
 
-            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
+            Intent intent = new Intent(ScanActivity.this, TicketProcessor.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("Data", ScData);
             intent.putExtra("Supported", "Yes");
@@ -130,7 +121,7 @@ public class ScanActivity extends AppCompatActivity implements ZBarScannerView.R
             finish();
 
         } else{
-            Intent intent = new Intent(ScanActivity.this, TicketProcessing.class);
+            Intent intent = new Intent(ScanActivity.this, TicketProcessor.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("Data", ScData);
             intent.putExtra("Supported", "No");

@@ -1,7 +1,6 @@
 package com.westechhub.westicketsmartinvitations;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -21,8 +20,6 @@ import android.widget.Toast;
 import com.google.common.hash.Hashing;
 import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
-import org.w3c.dom.Text;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -30,7 +27,7 @@ import java.util.Calendar;
 
 import io.paperdb.Paper;
 
-public class TicketProcessing extends AppCompatActivity {
+public class TicketProcessor extends AppCompatActivity {
 
     private String ResultData = "", ticketStatus = null, Supported = "",
             ActivationData = null, hashedCode = null, activationCode = null;
@@ -116,7 +113,7 @@ public class TicketProcessing extends AppCompatActivity {
     }
 
     private void goHome() {
-        Intent intent = new Intent(TicketProcessing.this, HomeActivity.class);
+        Intent intent = new Intent(TicketProcessor.this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -192,7 +189,7 @@ public class TicketProcessing extends AppCompatActivity {
 
 
     private void continueToResults(String ticketStatus) {
-        Intent intent = new Intent(TicketProcessing.this, ResultsActivity.class);
+        Intent intent = new Intent(TicketProcessor.this, ResultsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("Data", ResultData);
         intent.putExtra("Status", ticketStatus);
