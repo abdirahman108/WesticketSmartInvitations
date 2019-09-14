@@ -93,11 +93,15 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-            // Scanned Invatations List
+            // Check List
         scannedInivations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Scanned Invitations
+                //Check List
+                Intent intent = new Intent(HomeActivity.this, check_list.class);
+                startActivity(intent);
+
+
 
             }
         });
