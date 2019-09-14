@@ -34,6 +34,7 @@
         <activity android:name=".ActivationScanActivity" />
         <activity android:name=".TicketProcessing" />
         <activity android:name=".TicketsListActivity" />
+        <activity android:name=".check_list"></activity>
     </application>
 
 </manifest>
