@@ -1,10 +1,14 @@
 package com.westechhub.westicketsmartinvitations;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +16,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.hash.Hashing;
 import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -118,22 +127,62 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
         //Get Scan Results
         ScData = result.getContents();
 
-        String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
+
 
 
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
 
         if (ScData.matches(regex)){
-            Toast.makeText(this, "Way Shaqaynaysa", Toast.LENGTH_SHORT).show();
+            // Send Scan Results to Ticket Processing Class
+            Intent intent = new Intent(ActivationScanActivity.this, TicketProcessing.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("ActivationData", ScData);
+            startActivity(intent);
+            finish();
+        }else {
+            alertDialog();
+            vibrate();
         }
 
 
 
     }
+    private void alertDialog() {
+        final Dialog dialog = new Dialog(this); // Context, this, etc.
+        dialog.setTitle("Title");
 
+        dialog.setContentView(R.layout.alert_dialog);
+        TextView alertTxt = dialog.findViewById(R.id.dialog_info);
+        alertTxt.setText("");
+        alertTxt.setText("Unsupported QR Code, please scan the designated and supported codes");
 
+        dialog.show();
+
+        Button btn_dialog = dialog.findViewById(R.id.dialog_ok);
+        btn_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dialog.cancel();
+            }
+        });
+    }
     public void toneGen(){
         ToneGenerator toneG = new ToneGenerator(AudioManager.ERROR, 100);
         toneG.startTone(ToneGenerator.TONE_SUP_ERROR, 200);
+    }
+
+    public void vibrate(){
+
+        int vibrateTime = 200;
+
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(vibrateTime, VibrationEffect.DEFAULT_AMPLITUDE));
+        }else {
+            vibrator.vibrate(vibrateTime);
+        }
+
     }
 }

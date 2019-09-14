@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -78,26 +79,23 @@ public class ResultsActivity extends AppCompatActivity {
                         String str1 = String.valueOf(Html.fromHtml("<b>Ticket Number: <b>"));
                         String str2 = String.valueOf(Html.fromHtml("<b>Event Name: <b>" ));
 
-
                         txtTicketNo.setText(str1 + eventTicketNo);
                         txtEventName.setText(str2+ eventName);
 
                     }
 
-
-
-
                     if (Status.contains("Allowed")){
                         //Status Allowed
                         allowedStatus(ticketNo, eventName);
-
 
                     }else if (Status.contains("Denied")){
                         //Status Denied
                         deniedStatus(ticketNo);
 
+                    }else if (Status.contains("Used")){
+                        // Used Tickets
+                        usedStatus();
                     }
-
 
                 }else {
                     Toast.makeText(this, "Unsupported QR Code", Toast.LENGTH_SHORT).show();
@@ -120,6 +118,14 @@ public class ResultsActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void usedStatus() {
+        imgStatus.setBackgroundResource(R.drawable.khalad_new);
+        outerLayer.setBackgroundColor(Color.parseColor("#ff1f2e"));
+        btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
+        txtTime.setText("");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

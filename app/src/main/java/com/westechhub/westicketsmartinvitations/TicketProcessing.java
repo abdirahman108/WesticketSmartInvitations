@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.hash.Hashing;
+import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
 import org.w3c.dom.Text;
 
@@ -31,7 +32,9 @@ import io.paperdb.Paper;
 
 public class TicketProcessing extends AppCompatActivity {
 
-    private String ResultData = "", ticketStatus = null, Supported = "";
+    private String ResultData = "", ticketStatus = null, Supported = "",
+            ActivationData = null, hashedCode = null, activationCode = null;
+
     private String saveCurrentDate, saveCurrentTime;
 
     @Override
@@ -42,6 +45,9 @@ public class TicketProcessing extends AppCompatActivity {
 
         ResultData =  getIntent().getStringExtra("Data");
         Supported =  getIntent().getStringExtra("Supported");
+        ActivationData = getIntent().getStringExtra("ActivationData");
+
+
 
 
         if (ResultData != null && Supported.contains("Yes")){
@@ -77,7 +83,31 @@ public class TicketProcessing extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }else {
+        }else if (ActivationData != null){
+            // this is the place where activation code is processed
+
+            //check for existing activation code
+            activationCode =  Paper.book().read(Prevalent.ticketActivationCode);
+
+            if (TextUtils.isEmpty(activationCode)){
+
+                // save activation code.
+                Paper.book().write(Prevalent.ticketActivationCode, ActivationData);
+                goHome();
+
+            }else if (!TextUtils.isEmpty(activationCode) && activationCode.equals(hashedCode)){
+                //When existing activation code is scanned
+                goHome();
+
+            }else if (!TextUtils.isEmpty(activationCode) && !activationCode.equals(hashedCode)){
+                //when new activation code is scanned
+
+                // save activation code.
+                Paper.book().write(Prevalent.ticketActivationCode, ActivationData);
+                goHome();
+            }
+
+        } else {
             alertDialog();
             vibrate();
             Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_SHORT).show();
@@ -85,12 +115,22 @@ public class TicketProcessing extends AppCompatActivity {
 
     }
 
+    private void goHome() {
+        Intent intent = new Intent(TicketProcessing.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+
     private void checkTicketStatus(String eventName, String eventTicketNo, String eventCode) {
 
         String savedTickedNo = Paper.book().read(eventTicketNo);
         String hashedEventCode = Hashing.sha1().hashString(eventCode, Charset.forName("UTF-8")).toString();
+        String savedActivationCode = Paper.book().read(Prevalent.ticketActivationCode);
 
-        if (TextUtils.isEmpty(savedTickedNo)){
+        // check for ticket no and activation code.
+        if (TextUtils.isEmpty(savedTickedNo) && hashedEventCode.equals(savedActivationCode)){
 
             //save time
             Calendar calendar = Calendar.getInstance();
@@ -112,7 +152,15 @@ public class TicketProcessing extends AppCompatActivity {
             ticketStatus = "Allowed";
             continueToResults(ticketStatus);
             toneGen();
-        }else {
+            Toast.makeText(this, savedActivationCode, Toast.LENGTH_LONG).show();
+
+
+        }else if (!hashedEventCode.equals(savedActivationCode)){
+            ticketStatus = "Used";
+            continueToResults(ticketStatus);
+            vibrate();
+
+        } else {
             ticketStatus = "Denied";
             continueToResults(ticketStatus);
             vibrate();
