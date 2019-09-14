@@ -30,7 +30,7 @@ public class ResultsActivity extends AppCompatActivity {
     ActionBar mActionBar;
 
 
-    private String ResultData = "",  Status = "";
+    private String ResultData = "",  Status = "", eventTicketNo = "";
 
     private ProgressDialog loadingBar;
 
@@ -73,7 +73,7 @@ public class ResultsActivity extends AppCompatActivity {
                     if (ticketNo.contains("-")){
                         String [] eventSplit = ticketNo.split("\\-");
                         String eventCode = eventSplit[0];
-                        String eventTicketNo = eventSplit[1];
+                        eventTicketNo = eventSplit[1];
 
                         String str1 = String.valueOf(Html.fromHtml("<b>Ticket Number: <b>"));
                         String str2 = String.valueOf(Html.fromHtml("<b>Event Name: <b>" ));
@@ -128,7 +128,7 @@ public class ResultsActivity extends AppCompatActivity {
         outerLayer.setBackgroundColor(Color.parseColor("#ff1f2e"));
         btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
 
-        String timeID = ticketNo + "Time";
+        String timeID = eventTicketNo + "Time";
         String showTime = Paper.book().read(timeID);
         txtTime.setText("Scanned On: "+ showTime);
 
