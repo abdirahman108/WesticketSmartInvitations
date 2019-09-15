@@ -121,7 +121,8 @@ public class TicketProcessor extends AppCompatActivity {
         String savedActivationCode = Paper.book().read(Prevalent.ticketActivationCode);
 
         // check for ticket no and activation code.
-        if (TextUtils.isEmpty(savedTickedNo) && hashedEventCode.equals(savedActivationCode)){
+        if (TextUtils.isEmpty(savedTickedNo) ){
+//        if (TextUtils.isEmpty(savedTickedNo) && hashedEventCode.equals(savedActivationCode)){
 
             //save time
             Calendar calendar = Calendar.getInstance();
@@ -142,12 +143,11 @@ public class TicketProcessor extends AppCompatActivity {
             ticketStatus = "Allowed";
             continueToResults(ticketStatus);
             toneGen();
-            Toast.makeText(this, savedActivationCode, Toast.LENGTH_LONG).show();
 
-        }else if (!hashedEventCode.equals(savedActivationCode)){
-            ticketStatus = "Used";
-            continueToResults(ticketStatus);
-            vibrate();
+//        }else if (!hashedEventCode.equals(savedActivationCode)){
+//            ticketStatus = "Used";
+//            continueToResults(ticketStatus);
+//            vibrate();
 
         } else {
             ticketStatus = "Denied";
