@@ -118,13 +118,21 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
 
         String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
 
-        if (ScData.matches(regex)){
+        if (ScData.contains(":")){
             // Send Scan Results to Ticket Processing Class
-            Intent intent = new Intent(ActivationScanActivity.this, TicketProcessor.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("ActivationData", ScData);
-            startActivity(intent);
-            finish();
+            String[] split = ScData.split("\\:");
+            String Activation = split[0];
+            String Code = split[1];
+            if (Activation.equals("Activation Code") && Code.matches(regex)){
+                Intent intent = new Intent(ActivationScanActivity.this, TicketProcessor.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("ActivationData", Code);
+                startActivity(intent);
+                finish();
+            }else {
+                alertDialog();
+                vibrate();
+            }
         }else {
             alertDialog();
             vibrate();
@@ -139,7 +147,7 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
         dialog.setContentView(R.layout.alert_dialog);
         TextView alertTxt = dialog.findViewById(R.id.dialog_info);
         alertTxt.setText("");
-        alertTxt.setText("Unsupported QR Code, please scan the designated and supported codes");
+        alertTxt.setText("Invalid Activation Code");
 
         dialog.show();
 
@@ -161,9 +169,7 @@ public class ActivationScanActivity extends AppCompatActivity implements ZBarSca
     public void vibrate(){
 
         int vibrateTime = 200;
-
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         if (Build.VERSION.SDK_INT >= 26) {
             vibrator.vibrate(VibrationEffect.createOneShot(vibrateTime, VibrationEffect.DEFAULT_AMPLITUDE));
         }else {

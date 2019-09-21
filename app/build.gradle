@@ -52,8 +52,6 @@ dependencies {
 
     //Permission API
     implementation 'com.karumi:dexter:5.0.0'
-    
-    //
 
 
 }

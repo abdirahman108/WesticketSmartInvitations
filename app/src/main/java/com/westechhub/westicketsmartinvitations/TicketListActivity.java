@@ -1,5 +1,7 @@
 package com.westechhub.westicketsmartinvitations;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,15 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import fr.tvbarthel.lib.blurdialogfragment.BlurDialogFragment;
 import io.paperdb.Paper;
 
-public class TicketListActivity extends AppCompatActivity {
+public class TicketListActivity extends AppCompatActivity implements View.OnClickListener {
 
     ListView guestList;
     TextView numberOfGuests;
+    private String selectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +29,6 @@ public class TicketListActivity extends AppCompatActivity {
 
         guestList = findViewById(R.id.ticketList);
         numberOfGuests = findViewById(R.id.number_of_guests);
-
 
         Paper.init(this );
 
@@ -38,11 +42,16 @@ public class TicketListActivity extends AppCompatActivity {
         guestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object object = guestList.getItemAtPosition(position);
+               selectedItem = (String) parent.getItemAtPosition(position);
 
             }
         });
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }
