@@ -41,9 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
 
-        if (TextUtils.isEmpty(Hubiye)){
+        if (!TextUtils.isEmpty(Hubiye)){
+
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
+
         }
 
         loginButton = findViewById(R.id.main_getting_started);
