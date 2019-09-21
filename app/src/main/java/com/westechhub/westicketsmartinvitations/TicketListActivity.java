@@ -2,6 +2,8 @@ package com.westechhub.westicketsmartinvitations;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,14 +28,19 @@ public class TicketListActivity extends AppCompatActivity {
         Paper.init(this );
 
         List<String> allKeys = Paper.book().getAllKeys();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,allKeys);
-
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,allKeys);
         guestList.setAdapter(adapter);
 
         int ticketCount = guestList.getAdapter().getCount();
-
         numberOfGuests.setText(String.valueOf(ticketCount));
+
+        guestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object object = guestList.getItemAtPosition(position);
+
+            }
+        });
 
     }
 
