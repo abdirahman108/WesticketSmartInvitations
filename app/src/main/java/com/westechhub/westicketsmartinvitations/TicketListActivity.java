@@ -25,6 +25,7 @@ public class TicketListActivity extends AppCompatActivity {
         guestList = findViewById(R.id.ticketList);
         numberOfGuests = findViewById(R.id.number_of_guests);
 
+
         Paper.init(this );
 
         List<String> allKeys = Paper.book().getAllKeys();
