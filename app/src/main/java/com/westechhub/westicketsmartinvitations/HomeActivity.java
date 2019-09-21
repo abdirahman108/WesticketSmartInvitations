@@ -45,8 +45,11 @@ public class HomeActivity extends AppCompatActivity
 
         SliderLayout sliderShow = (SliderLayout) findViewById(R.id.slider);
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("These pictures will help you",R.drawable.scanimagezero);
-        file_maps.put("Welcome to TicketBox",R.drawable.scanimagezeroo);
+        file_maps.put("Welcome To wesTicket",R.drawable.scanimagezero);
+        file_maps.put("Trust",R.drawable.qr1);
+        file_maps.put("Secure",R.drawable.qr2);
+        file_maps.put("Fast",R.drawable.qr3);
+        file_maps.put("Modern",R.drawable.qr4);
 
         for(String name : file_maps.keySet()){
 
