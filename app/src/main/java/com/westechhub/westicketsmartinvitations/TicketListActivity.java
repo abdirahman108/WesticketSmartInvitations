@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -11,12 +12,16 @@ import io.paperdb.Paper;
 
 public class TicketListActivity extends AppCompatActivity {
 
-    ListView listView;
+    ListView guestList;
+    TextView numberOfGuests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_list);
+
+        guestList = findViewById(R.id.ticketList);
+        numberOfGuests = findViewById(R.id.number_of_guests);
 
         Paper.init(this );
 
@@ -24,9 +29,11 @@ public class TicketListActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,allKeys);
 
-        listView = findViewById(R.id.chklist);
+        guestList.setAdapter(adapter);
 
-        listView.setAdapter(adapter);
+        int ticketCount = guestList.getAdapter().getCount();
+
+        numberOfGuests.setText(String.valueOf(ticketCount));
 
     }
 
