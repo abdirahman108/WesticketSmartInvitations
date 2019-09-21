@@ -133,8 +133,8 @@ public class ResultsActivity extends AppCompatActivity {
         outerLayer.setBackgroundColor(Color.parseColor("#ff1f2e"));
         btnContinue.setBackgroundColor(Color.parseColor("#ff1f2e"));
 
-        String timeID = eventTicketNo + "Time";
-        String showTime = Paper.book().read(timeID);
+//        String timeID = eventTicketNo + "Time";
+        String showTime = Paper.book().read(eventTicketNo);
         txtTime.setText("Scanned On: "+ showTime);
     }
 

@@ -135,10 +135,10 @@ public class TicketProcessor extends AppCompatActivity {
             SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
             saveCurrentTime = currentTime.format(calendar.getTime());
 
-            String timeID = eventTicketNo + "Time";
+//            String timeID = eventTicketNo + "Time";
 
-            Paper.book().write(eventTicketNo, eventTicketNo);
-            Paper.book().write(timeID, saveCurrentTime);
+            Paper.book().write(eventTicketNo, saveCurrentTime);
+//            Paper.book().write(timeID, saveCurrentTime);
 
             ticketStatus = "Allowed";
             continueToResults(ticketStatus);

@@ -4,21 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
 
-public class check_list extends AppCompatActivity {
+public class TicketListActivity extends AppCompatActivity {
 
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_list);
+        setContentView(R.layout.activity_ticket_list);
 
         Paper.init(this );
 
