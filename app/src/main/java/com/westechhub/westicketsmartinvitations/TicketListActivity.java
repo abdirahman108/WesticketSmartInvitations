@@ -36,7 +36,7 @@ public class TicketListActivity extends AppCompatActivity implements View.OnClic
         guestList.setAdapter(adapter);
 
         int ticketCount = guestList.getAdapter().getCount();
-        numberOfGuests.setText(String.valueOf(ticketCount));
+        numberOfGuests.setText(String.valueOf(ticketCount - 1));
 
         guestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

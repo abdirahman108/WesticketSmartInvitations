@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
         Paper.init(this);
 
         String Hubiye =  Paper.book().read(Prevalent.ticketActivationCode);
+        String Session = Paper.book().read(Prevalent.SessionKey);
 
-        if (!TextUtils.isEmpty(Hubiye)){
+        if (!TextUtils.isEmpty(Session)){
 
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivationScanActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
