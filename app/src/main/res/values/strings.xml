@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Westicket: Smart Invitations</string>
+    <string name="app_name">Westickt: Smart Invitations</string>
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,6 +9,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="toggle_flash">Flash</string>
-    <string name="flash_on">Flash [ON]</string>
-    <string name="flash_off">Flash [OFF]</string>
+    <string name="flash_on">Flash [ON]</strinring>
 </resources>
+    g>
+<string name="flash_off">Flash [OFF]</st

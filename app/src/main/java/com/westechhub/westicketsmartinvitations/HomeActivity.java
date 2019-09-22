@@ -50,7 +50,9 @@ public class HomeActivity extends AppCompatActivity
         file_maps.put("Secure",R.drawable.qr2);
         file_maps.put("Fast",R.drawable.qr3);
         file_maps.put("Modern",R.drawable.qr4);
+//        "?>><"
 
+//        /**/
         for(String name : file_maps.keySet()){
 
             TextSliderView textSliderView = new TextSliderView(this);
