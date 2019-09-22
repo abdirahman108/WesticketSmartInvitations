@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import fr.tvbarthel.lib.blurdialogfragment.BlurDialogFragment;
 import io.paperdb.Paper;
 
 public class TicketListActivity extends AppCompatActivity implements View.OnClickListener {
