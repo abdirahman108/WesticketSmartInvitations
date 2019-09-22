@@ -53,5 +53,12 @@ dependencies {
     //Permission API
     implementation 'com.karumi:dexter:5.0.0'
 
+    ///FireBase Library
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
+    implementation 'com.google.firebase:firebase-storage:11.8.0'
+    implementation 'com.firebaseui:firebase-ui-database:3.2.2'
+
 
 }
+apply plugin: 'com.google.gms.google-services'

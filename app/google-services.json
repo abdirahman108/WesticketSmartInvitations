@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "952875026250",
+    "firebase_url": "https://westickt-e9b60.firebaseio.com",
+    "project_id": "westickt-e9b60",
+    "storage_bucket": "westickt-e9b60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952875026250:android:5745305ef81a97897a63b3",
+        "android_client_info": {
+          "package_name": "com.westechhub.westicketsmartinvitations"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952875026250-eqaeeoa7qm18onbmbp7obp8bbmar8ut5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.westechhub.westicketsmartinvitations",
+            "certificate_hash": "c33f84a61916e0e7fcf80f49a967297ab29274d5"
+          }
+        },
+        {
+          "client_id": "952875026250-4aqd00rdl622v2mcsgu3g2d9ulogf05a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC_tc_U-dZ7juWeBMFI2_PfA69JbC2zTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952875026250-4aqd00rdl622v2mcsgu3g2d9ulogf05a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
