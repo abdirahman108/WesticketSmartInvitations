@@ -47,7 +47,7 @@ import io.paperdb.Paper;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView scanInvitations, scannedInivations;
+    private ImageView scanInvitations, scannedInivations ,key;
     public String dialogOldPass, dialogNewPass, dialogConfirmPass;
 
     @Override
@@ -120,6 +120,18 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
+
+        key = findViewById(R.id.key);
+
+        key.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ActivationScanActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
