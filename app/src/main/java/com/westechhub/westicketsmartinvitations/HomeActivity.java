@@ -144,7 +144,14 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activation_status, menu);
+        String activationStatus = Paper.book().read(Prevalent.ticketActivationCode);
+
+       if (TextUtils.isEmpty(activationStatus)){
+           getMenuInflater().inflate(R.menu.menu_activation_status, menu);
+       }
+       else{
+           getMenuInflater().inflate(R.menu.menu_activate, menu);
+       }
         return true;
     }
 
@@ -156,7 +163,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_activation_status) {
+        if (id == R.id.saxx) {
 
             Intent intent = new Intent(HomeActivity.this, ActivationScanActivity.class);
             startActivity(intent);
