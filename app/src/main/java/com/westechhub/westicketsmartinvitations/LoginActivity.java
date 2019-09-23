@@ -104,10 +104,10 @@ public class LoginActivity extends AppCompatActivity
 
     private void LoginUser()
     {
-        String phone = InputPhoneNumber.getText().toString();
+        String username = InputPhoneNumber.getText().toString();
         String password = InputPassword.getText().toString();
 
-        if (TextUtils.isEmpty(phone))
+        if (TextUtils.isEmpty(username))
         {
             Toast.makeText(this, "Please write your username...", Toast.LENGTH_SHORT).show();
         }
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity
             loadingBar.show();
 
 
-            AllowAccessToAccount(phone, password);
+            AllowAccessToAccount(username, password);
         }
     }
 
