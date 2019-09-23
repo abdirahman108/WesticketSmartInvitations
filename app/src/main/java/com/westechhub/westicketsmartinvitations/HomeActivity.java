@@ -1,7 +1,10 @@
 package com.westechhub.westicketsmartinvitations;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,23 +15,39 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.common.hash.Hashing;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.westechhub.westicketsmartinvitations.Model.Users;
+import com.westechhub.westicketsmartinvitations.Prevalent.Prevalent;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
+
+import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ImageView scanInvitations, scannedInivations;
+    public String dialogOldPass, dialogNewPass, dialogConfirmPass;
 
     @Override
     protected void onStart() {
@@ -95,8 +114,8 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //Check List
-//                Intent intent = new Intent(HomeActivity.this, TicketListActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(HomeActivity.this, TicketListActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -136,7 +155,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_activation_status) {
             return true;
         }
 
@@ -149,18 +168,25 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_activate) {
+            Intent intent = new Intent(HomeActivity.this, ActivationScanActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_changepass) {
+            showDialog(HomeActivity.this);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_contact_us) {
+            Intent callIntent = new Intent(Intent.ACTION_VIEW);
+            callIntent.setData(Uri.parse("tel:+252634005024"));
+            startActivity(callIntent);
 
-        } else if (id == R.id.nav_manage) {
+        }else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            Paper.book().delete(Prevalent.SessionKey); // Delete Session
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -184,5 +210,100 @@ public class HomeActivity extends AppCompatActivity
             }).check();
         }
 
+    }
+    private void ChangePassword() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Changing Password");
+        progressDialog.setMessage("Please wait, while we are updating your account information");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        final DatabaseReference RootRef;
+        RootRef = FirebaseDatabase.getInstance().getReference();
+
+        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.child("Users").child(Prevalent.currentOnlineUsers.getUsername()).exists()) {
+                    Users usersData = dataSnapshot.child("Users").child(Prevalent.currentOnlineUsers.getUsername()).getValue(Users.class);
+
+                    if (usersData.getUsername().equals(Prevalent.currentOnlineUsers.getUsername())) {
+                        if (usersData.getPassword().equals(Hashing.sha256().hashString(dialogOldPass, Charset.forName("UTF-8")).toString())) {
+                            //change Pass
+                            RootRef.child("Users").child(Prevalent.currentOnlineUsers.getUsername()).child("password")
+                                    .setValue(Hashing.sha256().hashString(dialogNewPass, Charset.forName("UTF-8")).toString());
+                            progressDialog.dismiss();
+
+                            Toast.makeText(HomeActivity.this, "Password Changed Successfully", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            showDialog(HomeActivity.this);
+                            Toast.makeText(HomeActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    }
+                } else {
+                    showDialog(HomeActivity.this);
+                    Toast.makeText(HomeActivity.this, "Account with this " + Prevalent.currentOnlineUsers.getUsername() + " number do not exists.", Toast.LENGTH_SHORT).show();
+
+                    progressDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void showDialog(HomeActivity homeActivity) {
+        final Dialog dialog = new Dialog(homeActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.change_password);
+
+        final EditText oldPassInput = dialog.findViewById(R.id.old_password);
+        final EditText newPassInput = dialog.findViewById(R.id.new_password);
+        final EditText confirmInput = dialog.findViewById(R.id.confirm_password);
+
+//        String newPassword = newPassInput.getText().toString();
+//        String oldPassword = oldPassInput.getText().toString();
+//        String confirmPassword = newPassInput.getText().toString();
+
+        Button updatePass = dialog.findViewById(R.id.update_password);
+        Button closeDialog = dialog.findViewById(R.id.close_dialog);
+
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        updatePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogOldPass = String.valueOf(oldPassInput.getText());
+                dialogNewPass = String.valueOf(newPassInput.getText());
+                dialogConfirmPass = String.valueOf(confirmInput.getText());
+
+                if (dialogNewPass.equals(dialogConfirmPass)){
+                    ChangePassword();
+                    dialog.dismiss();
+
+                }else{
+                    Toast.makeText(HomeActivity.this, "New Password doesn't match", Toast.LENGTH_SHORT).show();
+                    dialog.show();
+                }
+
+
+            }
+        });
+
+        dialog.show();
     }
 }
