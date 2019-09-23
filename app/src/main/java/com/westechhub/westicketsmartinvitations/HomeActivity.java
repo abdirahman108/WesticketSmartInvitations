@@ -95,8 +95,9 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //Check List
-                Intent intent = new Intent(HomeActivity.this, TicketListActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(HomeActivity.this, TicketListActivity.class);
+//                startActivity(intent);
+
             }
         });
 
