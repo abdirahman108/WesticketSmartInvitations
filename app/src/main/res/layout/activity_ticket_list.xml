@@ -47,7 +47,7 @@
         android:freezesText="true"
         android:text="Number of guests"
         android:textAlignment="center"
-        android:textSize="40dp" />
+        android:textSize="150dp" />
 
 
     <!--    <RelativeLayout-->
