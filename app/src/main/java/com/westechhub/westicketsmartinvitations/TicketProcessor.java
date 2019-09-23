@@ -83,7 +83,6 @@ public class TicketProcessor extends AppCompatActivity {
             activationCode =  Paper.book().read(Prevalent.ticketActivationCode);
 
             if (TextUtils.isEmpty(activationCode)){
-
                 // save activation code.
                 Paper.book().write(Prevalent.ticketActivationCode, ActivationData);
                 goHome();
@@ -94,6 +93,9 @@ public class TicketProcessor extends AppCompatActivity {
 
             }else if (!TextUtils.isEmpty(activationCode) && !activationCode.equals(hashedCode)){
                 //when new activation code is scanned
+
+                //Delete the old Data
+                Paper.book().destroy();
 
                 // save activation code.
                 Paper.book().write(Prevalent.ticketActivationCode, ActivationData);
@@ -106,6 +108,7 @@ public class TicketProcessor extends AppCompatActivity {
         }
 
     }
+
 
     private void goHome() {
         Intent intent = new Intent(TicketProcessor.this, HomeActivity.class);
@@ -121,8 +124,8 @@ public class TicketProcessor extends AppCompatActivity {
         String savedActivationCode = Paper.book().read(Prevalent.ticketActivationCode);
 
         // check for ticket no and activation code.
-        if (TextUtils.isEmpty(savedTickedNo) ){
-//        if (TextUtils.isEmpty(savedTickedNo) && hashedEventCode.equals(savedActivationCode)){
+//        if (TextUtils.isEmpty(savedTickedNo) ){
+        if (TextUtils.isEmpty(savedTickedNo) && hashedEventCode.equals(savedActivationCode)){
 
             //save time
             Calendar calendar = Calendar.getInstance();
