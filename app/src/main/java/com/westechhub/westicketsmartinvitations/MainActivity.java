@@ -2,6 +2,7 @@ package com.westechhub.westicketsmartinvitations;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         contactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Please call us", Toast.LENGTH_SHORT).show();
+                Intent callIntent = new Intent(Intent.ACTION_VIEW);
+                callIntent.setData(Uri.parse("tel:+252634005024"));
+                startActivity(callIntent);
             }
         });
 

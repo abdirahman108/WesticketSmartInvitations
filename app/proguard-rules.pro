@@ -43,3 +43,15 @@
 -keepclassmembers class net.sourceforge.zbar.Image { *; }
 -keepclassmembers class net.sourceforge.zbar.Symbol { *; }
 -keepclassmembers class net.sourceforge.zbar.SymbolSet { *; }
+
+-keepattributes Signature
+-keep class com.firebase.** { *; }
+-keep class org.apache.** { *; }
+-keepnames class com.fasterxml.jackson.** { *; }
+-keepnames class javax.servlet.** { *; }
+-keepnames class org.ietf.jgss.** { *; }
+-dontwarn org.w3c.dom.**
+-dontwarn org.joda.time.**
+-dontwarn org.shaded.apache.**
+-dontwarn org.ietf.jgss.**
+-keepclassmembers class com.westechhub.westicketsmartinvitations.Model.** { *; }
