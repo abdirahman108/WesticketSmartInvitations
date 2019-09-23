@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/key"
+            android:id="@+id/activation_button"
             android:layout_width="94dp"
             android:layout_height="103dp"
             android:layout_marginStart="10dp"

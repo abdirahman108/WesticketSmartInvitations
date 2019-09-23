@@ -47,7 +47,7 @@ import io.paperdb.Paper;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView scanInvitations, scannedInivations ,key;
+    private ImageView scanInvitations, scannedInivations , btnActivationKey;
     public String dialogOldPass, dialogNewPass, dialogConfirmPass;
 
     @Override
@@ -121,9 +121,9 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        key = findViewById(R.id.key);
+        btnActivationKey = findViewById(R.id.activation_button);
 
-        key.setOnClickListener(new View.OnClickListener() {
+        btnActivationKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ActivationScanActivity.class);
@@ -159,10 +159,10 @@ public class HomeActivity extends AppCompatActivity
         String activationStatus = Paper.book().read(Prevalent.ticketActivationCode);
 
        if (TextUtils.isEmpty(activationStatus)){
-           getMenuInflater().inflate(R.menu.menu_activation_status, menu);
+           getMenuInflater().inflate(R.menu.menu_inactive, menu);
        }
        else{
-           getMenuInflater().inflate(R.menu.menu_activate, menu);
+           getMenuInflater().inflate(R.menu.menu_active, menu);
        }
         return true;
     }

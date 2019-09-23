@@ -147,10 +147,10 @@ public class TicketProcessor extends AppCompatActivity {
             continueToResults(ticketStatus);
             toneGen();
 
-//        }else if (!hashedEventCode.equals(savedActivationCode)){
-//            ticketStatus = "Used";
-//            continueToResults(ticketStatus);
-//            vibrate();
+        }else if (!hashedEventCode.equals(savedActivationCode)){
+            ticketStatus = "Used";
+            continueToResults(ticketStatus);
+            vibrate();
 
         } else {
             ticketStatus = "Denied";
