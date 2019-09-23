@@ -67,8 +67,8 @@ public class HomeActivity extends AppCompatActivity
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
         file_maps.put("Welcome To wesTicket",R.drawable.scanimagezero);
         file_maps.put("Trust",R.drawable.qr1);
-        file_maps.put("Secure",R.drawable.qr2);
-        file_maps.put("Fast",R.drawable.qr3);
+        file_maps.put("Secure",R.drawable.westkt);
+        file_maps.put("Fast",R.drawable.sliderx);
         file_maps.put("Modern",R.drawable.qr4);
 //        "?>><"
 
