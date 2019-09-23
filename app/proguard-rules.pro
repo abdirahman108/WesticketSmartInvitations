@@ -19,3 +19,27 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+-dontwarn okio.**
+-dontwarn javax.lang.model.**
+-ignorewarnings
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+-dontwarn android.support.v4.app.**
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
+
+-keepclassmembers class * {
+    native <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclassmembers class net.sourceforge.zbar.ImageScanner { *; }
+-keepclassmembers class net.sourceforge.zbar.Image { *; }
+-keepclassmembers class net.sourceforge.zbar.Symbol { *; }
+-keepclassmembers class net.sourceforge.zbar.SymbolSet { *; }
