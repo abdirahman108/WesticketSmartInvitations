@@ -99,6 +99,15 @@ public class TicketProcessor extends AppCompatActivity {
 
                 // save activation code.
                 Paper.book().write(Prevalent.ticketActivationCode, ActivationData);
+
+                // Login before continuing
+//                Intent intent = new Intent(TicketProcessor.this, LoginActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//                finish();
+
+                Toast.makeText(this, "New Activation Accepted", Toast.LENGTH_SHORT).show();
+
                 goHome();
             }
 

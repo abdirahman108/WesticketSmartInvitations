@@ -90,14 +90,6 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
             // Qr Scanning Button
         scanInvitations = findViewById(R.id.img_btn_scan);
         scannedInivations = findViewById(R.id.img_btn_scanned_invitations);
@@ -115,6 +107,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //Check List
+
                 Intent intent = new Intent(HomeActivity.this, TicketListActivity.class);
                 startActivity(intent);
 

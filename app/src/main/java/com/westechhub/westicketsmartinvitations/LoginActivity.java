@@ -45,6 +45,9 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Offline Capabilities
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         LoginButton = (Button) findViewById(R.id.login_btn);
         InputPassword = (EditText) findViewById(R.id.login_password_input);
@@ -67,40 +70,7 @@ public class LoginActivity extends AppCompatActivity
                 LoginUser();
             }
         });
-
-//        appLogo.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                AdminLink.setVisibility(View.VISIBLE);
-//                NotAdminLink.setVisibility(View.INVISIBLE);
-//                return false;
-//            }
-//        });
-
-        AdminLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                LoginButton.setText("Login Admin");
-                AdminLink.setVisibility(View.INVISIBLE);
-                NotAdminLink.setVisibility(View.VISIBLE);
-                parentDbName = "Admins";
-            }
-        });
-
-        NotAdminLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                LoginButton.setText("Login");
-                AdminLink.setVisibility(View.VISIBLE);
-                NotAdminLink.setVisibility(View.INVISIBLE);
-                parentDbName = "Users";
-            }
-        });
     }
-
-
 
     private void LoginUser()
     {
@@ -131,15 +101,12 @@ public class LoginActivity extends AppCompatActivity
 
     private void AllowAccessToAccount(final String username, final String password)
     {
-        if(chkBoxRememberMe.isChecked())
-        {
-            Paper.book().write(Prevalent.UsernameKey, username);
-            Paper.book().write(Prevalent.UserPasswordKey, Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString());
-        }
 
 
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
+        // Keeps the Data Fresh
+        RootRef.keepSynced(true);
 
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -154,16 +121,6 @@ public class LoginActivity extends AppCompatActivity
                     {
                         if (usersData.getPassword().equals(Hashing.sha256().hashString(password, Charset.forName("UTF-8")).toString()))
                         {
-//                            if (parentDbName.equals("Admins"))
-//                            {
-//                                Toast.makeText(LoginActivity.this, "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_SHORT).show();
-//                                loadingBar.dismiss();
-//
-//                                Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                startActivity(intent);
-//                                finish();
-//                            }
                             if (parentDbName.equals("Users"))
                             {
                                 Toast.makeText(LoginActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
